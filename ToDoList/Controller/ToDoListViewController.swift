@@ -11,17 +11,12 @@ import UIKit
 class ToDoListViewController: UITableViewController{
 
     var itemArray = [ToDoModel]()
-    
-    var userDefaults = UserDefaults.standard
+    let dataPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let newItem = ToDoModel()
-        newItem.title = "Find Mike"
-        itemArray.append(newItem)
-        if let items = userDefaults.array(forKey: "ToDoListArray") as? [ToDoModel] {
-            itemArray = items
-        }
+
+        loadItems()
     }
 
     //MARK: - TableView DataSource
@@ -48,7 +43,7 @@ class ToDoListViewController: UITableViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
         itemArray[indexPath.row].isChecked = !itemArray[indexPath.row].isChecked
-       
+        saveItems()
         tableView.reloadData()
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -67,9 +62,7 @@ class ToDoListViewController: UITableViewController{
             let newItem = ToDoModel()
             newItem.title = textField.text!
             self.itemArray.append(newItem )
-            
-            self.userDefaults.set(self.itemArray, forKey: "ToDoListArray")
-            
+            self.saveItems()
             self.tableView.reloadData()
         }
         alert.addTextField { (alertTextField) in
@@ -81,6 +74,36 @@ class ToDoListViewController: UITableViewController{
         present(alert, animated: true, completion: nil)
     }
     
+    //MARk: - Model manipulation methods
+
+    func saveItems(){
+        
+        let encoder  = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(itemArray)
+            try data.write(to: dataPath!)
+        }catch{
+            print("error :,\(error)")
+        }
+        
+    }
+    
+    func loadItems(){
+        do{ 
+            let data = try  Data(contentsOf: self.dataPath!)
+            let decoder = PropertyListDecoder()
+            do{
+                itemArray = try decoder.decode([ToDoModel].self, from: data)
+            }catch{
+                print(error)
+            }
+        }catch{
+            print(error)
+        }
+    }
 }
+
+
 
 

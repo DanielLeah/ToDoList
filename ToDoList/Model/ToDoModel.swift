@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ToDoModel{
+class ToDoModel: Encodable, Decodable{
     var title :String = ""
     var isChecked :Bool = false
 }
