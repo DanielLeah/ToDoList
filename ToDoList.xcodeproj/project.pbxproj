@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		673C87CA2208657C00D2111E /* ToDoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673C87C92208657C00D2111E /* ToDoModel.swift */; };
 		676BDEA522045FA60089F0AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676BDEA422045FA60089F0AE /* AppDelegate.swift */; };
 		676BDEA722045FA60089F0AE /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676BDEA622045FA60089F0AE /* ToDoListViewController.swift */; };
 		676BDEAA22045FA60089F0AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 676BDEA822045FA60089F0AE /* Main.storyboard */; };
@@ -36,7 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		673C87C92208657C00D2111E /* ToDoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoModel.swift; sourceTree = "<group>"; };
 		676BDEA122045FA60089F0AE /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		676BDEA422045FA60089F0AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		676BDEA622045FA60089F0AE /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
@@ -78,14 +76,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		673C87CB220865ED00D2111E /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				673C87C92208657C00D2111E /* ToDoModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		673C87CC2208660200D2111E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -136,7 +126,6 @@
 			children = (
 				676BDEA422045FA60089F0AE /* AppDelegate.swift */,
 				673C87CE2208663000D2111E /* Controller */,
-				673C87CB220865ED00D2111E /* Model */,
 				673C87CD2208662600D2111E /* View */,
 				673C87CC2208660200D2111E /* Supporting Files */,
 				676BDEB322045FA70089F0AE /* Info.plist */,
@@ -295,7 +284,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				676BDEA722045FA60089F0AE /* ToDoListViewController.swift in Sources */,
-				673C87CA2208657C00D2111E /* ToDoModel.swift in Sources */,
 				676BDEAD22045FA60089F0AE /* ToDoList.xcdatamodeld in Sources */,
 				676BDEA522045FA60089F0AE /* AppDelegate.swift in Sources */,
 			);

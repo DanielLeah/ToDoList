@@ -7,16 +7,20 @@
 //
 
 import UIKit
-
+import CoreData
 class ToDoListViewController: UITableViewController{
 
-    var itemArray = [ToDoModel]()
-    let dataPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    var itemArray = [Item]()
+    let context =  (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        
         loadItems()
+        
     }
 
     //MARK: - TableView DataSource
@@ -34,7 +38,7 @@ class ToDoListViewController: UITableViewController{
         //ternary operator ==>
         // value = condition ? valueIfTrue : ValueIfFalse
         
-       cell.accessoryType =  item.isChecked ? .checkmark : .none
+       cell.accessoryType =  item.done ? .checkmark : .none
         
         return cell
     }
@@ -42,9 +46,8 @@ class ToDoListViewController: UITableViewController{
     //MARK: - Table View Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
-        itemArray[indexPath.row].isChecked = !itemArray[indexPath.row].isChecked
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         saveItems()
-        tableView.reloadData()
         
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -59,11 +62,12 @@ class ToDoListViewController: UITableViewController{
         let alert = UIAlertController(title: "Add new task", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-            let newItem = ToDoModel()
+            
+            let newItem = Item(context: self.context)
             newItem.title = textField.text!
+            newItem.done = false
             self.itemArray.append(newItem )
             self.saveItems()
-            self.tableView.reloadData()
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Creat new Item"
@@ -78,32 +82,37 @@ class ToDoListViewController: UITableViewController{
 
     func saveItems(){
         
-        let encoder  = PropertyListEncoder()
-        
-        do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataPath!)
-        }catch{
-            print("error :,\(error)")
-        }
-        
-    }
-    
-    func loadItems(){
-        do{ 
-            let data = try  Data(contentsOf: self.dataPath!)
-            let decoder = PropertyListDecoder()
-            do{
-                itemArray = try decoder.decode([ToDoModel].self, from: data)
-            }catch{
-                print(error)
-            }
+        do{
+            try context.save()
         }catch{
             print(error)
         }
+        
+        self.tableView.reloadData()
+        
+    }
+    
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+        do{
+            itemArray =  try context.fetch(request)
+        }catch{
+            print(error)
+        }
+        tableView.reloadData()
     }
 }
 
-
+extension ToDoListViewController:UISearchBarDelegate{
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        
+        request.predicate = NSPredicate(format: "title CONTAINS %@", searchBar.text!)
+        
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true )]
+        
+        loadItems(with: request)
+    }
+}
 
 
