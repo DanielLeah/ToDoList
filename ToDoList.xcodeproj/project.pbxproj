@@ -15,6 +15,7 @@
 		676BDEB222045FA70089F0AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 676BDEB022045FA70089F0AE /* LaunchScreen.storyboard */; };
 		676BDEBD22045FA70089F0AE /* ToDoListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676BDEBC22045FA70089F0AE /* ToDoListTests.swift */; };
 		676BDEC822045FA70089F0AE /* ToDoListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676BDEC722045FA70089F0AE /* ToDoListUITests.swift */; };
+		67E82EC5220B0E880002BC54 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67E82EC4220B0E880002BC54 /* CategoryTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		676BDEC322045FA70089F0AE /* ToDoListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		676BDEC722045FA70089F0AE /* ToDoListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListUITests.swift; sourceTree = "<group>"; };
 		676BDEC922045FA70089F0AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		67E82EC4220B0E880002BC54 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 		673C87CE2208663000D2111E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				67E82EC4220B0E880002BC54 /* CategoryTableViewController.swift */,
 				676BDEA622045FA60089F0AE /* ToDoListViewController.swift */,
 			);
 			path = Controller;
@@ -286,6 +289,7 @@
 				676BDEA722045FA60089F0AE /* ToDoListViewController.swift in Sources */,
 				676BDEAD22045FA60089F0AE /* ToDoList.xcdatamodeld in Sources */,
 				676BDEA522045FA60089F0AE /* AppDelegate.swift in Sources */,
+				67E82EC5220B0E880002BC54 /* CategoryTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,10 +14,16 @@ class ToDoListViewController: UITableViewController{
     @IBOutlet weak var searchBar: UISearchBar!
     
     var itemArray = [Item]()
+    
+    var selectedCategory : Category? {
+        didSet{
+            loadItems()
+        }
+    }
+    
     let context =  (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     override func viewDidLoad() {
         super.viewDidLoad()
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
         
         loadItems()
         
@@ -66,6 +72,7 @@ class ToDoListViewController: UITableViewController{
             let newItem = Item(context: self.context)
             newItem.title = textField.text!
             newItem.done = false
+            newItem.parentCategory = self.selectedCategory
             self.itemArray.append(newItem )
             self.saveItems()
         }
@@ -92,7 +99,16 @@ class ToDoListViewController: UITableViewController{
         
     }
     
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), with predicate: NSPredicate? = nil){
+        let predicateParent = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(type: .and, subpredicates: [additionalPredicate, predicateParent])
+        }else{
+            request.predicate = predicateParent
+            
+        }
+        
         do{
             itemArray =  try context.fetch(request)
         }catch{
@@ -112,6 +128,16 @@ extension ToDoListViewController:UISearchBarDelegate{
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true )]
         
         loadItems(with: request)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0{
+            loadItems()
+            
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
     }
 }
 
